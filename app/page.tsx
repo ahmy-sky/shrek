@@ -32,7 +32,7 @@ export default function Page() {
             src="/shrek.jpg"
             width={500}
             height={500}
-            className="hidden md:block"
+            // className="hidden md:block"
             alt="Screenshot of Shrek"
           />
         </div>
