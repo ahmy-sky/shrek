@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react'; // Import useState hook
+import { useRef, useEffect } from 'react'; // Import useRef and useEffect hooks
 import AcmeLogo from '@/app/ui/acme-logo';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
@@ -8,17 +8,24 @@ import { lusitana } from '@/app/ui/fonts';
 import Image from 'next/image';
 
 export default function Page() {
-  const [isMusicPlaying, setIsMusicPlaying] = useState(false); // State to track if music is playing
-  const [audio] = useState(new Audio('/shrek-music.mp3'));
+  const isMusicPlayingRef = useRef(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    audioRef.current = new Audio('/shrek-music.mp3');
+  }, []);
 
   // Function to handle toggling play/pause of the music
   const handleToggleMusic = () => {
-    if (isMusicPlaying) {
-      audio.pause(); // Pause the audio
-    } else {
-      audio.play(); // Play the audio
+    const audio = audioRef.current!;
+    if (audio) {
+      if (isMusicPlayingRef.current) {
+        audio.pause();
+      } else {
+        audio.play();
+      }
+      isMusicPlayingRef.current = !isMusicPlayingRef.current;
     }
-    setIsMusicPlaying(!isMusicPlaying); // Toggle the state
   };
 
   return (
