@@ -9,7 +9,7 @@ import Image from 'next/image';
 
 export default function Page() {
   const [isMusicPlaying, setIsMusicPlaying] = useState(false); // State to track if music is playing
-  const [audio] = useState(new Audio('/shrek-music.mp3')); // Initialize audio element
+  const [audio] = useState(new Audio('/shrek-music.mp3'));
 
   // Function to handle toggling play/pause of the music
   const handleToggleMusic = () => {
