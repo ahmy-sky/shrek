@@ -8,25 +8,50 @@ import { lusitana } from '@/app/ui/fonts';
 import Image from 'next/image';
 
 export default function Page() {
-  const isMusicPlayingRef = useRef(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const isShrekMusicPlayingRef = useRef(false);
+  const shrekAudioRef = useRef<HTMLAudioElement | null>(null);
+  const doTheRoarAudioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    audioRef.current = new Audio('/shrek-music.mp3');
+    shrekAudioRef.current = new Audio('/shrek-music.mp3');
+    doTheRoarAudioRef.current = new Audio('/do-the-roar.mp3');
   }, []);
 
-  // Function to handle toggling play/pause of the music
-  const handleToggleMusic = () => {
-    const audio = audioRef.current!;
+  // Function to handle toggling play/pause of the Shrek music
+  const handleToggleShrekMusic = () => {
+    const audio = shrekAudioRef.current!;
     if (audio) {
-      if (isMusicPlayingRef.current) {
+      if (isShrekMusicPlayingRef.current) {
         audio.pause();
       } else {
         audio.play();
       }
-      isMusicPlayingRef.current = !isMusicPlayingRef.current;
+      isShrekMusicPlayingRef.current = !isShrekMusicPlayingRef.current;
     }
   };
+
+  // Function to play the "do the roar" audio
+  const handleDoTheRoar = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    // Check if the click occurred on the Shrek image or its children
+    console.log(target);
+
+    if (target.classList.contains('shrek-image')) {
+      return;
+    }
+    const audio = doTheRoarAudioRef.current!;
+    if (audio) {
+      audio.play();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleDoTheRoar);
+    // Remove event listener when component unmounts to avoid memory leaks
+    return () => {
+      document.removeEventListener('click', handleDoTheRoar);
+    };
+  }, []);
 
   return (
     <main className="flex min-h-screen flex-col p-6">
@@ -49,12 +74,17 @@ export default function Page() {
         </div>
         <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
           {/* Add Hero Images Here */}
-          <div onClick={handleToggleMusic} style={{ cursor: 'pointer' }}>
+          <div
+            className="shrek-image-container"
+            onClick={handleToggleShrekMusic}
+            style={{ cursor: 'pointer' }}
+          >
             <Image
               src="/shrek.jpg"
               width={500}
               height={500}
               alt="Screenshot of Shrek"
+              className="shrek-image"
             />
           </div>
         </div>
