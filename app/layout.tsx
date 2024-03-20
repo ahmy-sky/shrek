@@ -1,5 +1,6 @@
 import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
+import { Analytics } from '@vercel/analytics/react';
 
 export default function RootLayout({
   children,
@@ -8,13 +9,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>
-        {children}
-        {/* <audio controls autoPlay className="mt-4">
-          <source src="/shrek-music.mp3" type="audio/mpeg" />
-          Your browser does not support the audio element.
-        </audio> */}
-      </body>
+      <Analytics />
+      <body className={`${inter.className} antialiased`}>{children}</body>
     </html>
   );
 }

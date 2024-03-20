@@ -1,5 +1,6 @@
 'use client';
 
+import '@/app/ui/global.css';
 import { useRef, useEffect } from 'react'; // Import useRef and useEffect hooks
 import AcmeLogo from '@/app/ui/acme-logo';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
